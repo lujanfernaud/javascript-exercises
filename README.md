@@ -1,1 +1,3 @@
-# javascript-exercises
+# JavaScript Katas
+
+JavaScript practice.
