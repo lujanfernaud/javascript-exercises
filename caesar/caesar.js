@@ -25,7 +25,7 @@ const upperCaseLetters = upperCaseCodes.map(code => String.fromCodePoint(code))
 const lowerCaseLetters = lowerCaseCodes.map(code => String.fromCodePoint(code))
 
 function caesar(string, shiftFactor) {
-  return new CaesarCipher(string, shiftFactor).call()
+  return new CaesarCipher(string, shiftFactor).run()
 }
 
 class CaesarCipher {
@@ -34,7 +34,7 @@ class CaesarCipher {
     this.shiftFactor = shiftFactor
   }
 
-  call() {
+  run() {
     const newCharacters = this.getNewCharacters()
 
     return newCharacters.join('')
