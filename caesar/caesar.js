@@ -25,29 +25,50 @@ const upperCaseLetters = upperCaseCodes.map(code => String.fromCodePoint(code))
 const lowerCaseLetters = lowerCaseCodes.map(code => String.fromCodePoint(code))
 
 function caesar(string, shiftFactor) {
-  const newCharacters = getNewCharacters(string, shiftFactor)
-
-  return newCharacters.join('')
+  return new CaesarCipher(string, shiftFactor).call()
 }
 
-function getNewCharacters(string, shiftFactor) {
-  return map.call(string, character => {
+class CaesarCipher {
+  constructor(string, shiftFactor) {
+    this.string = string
+    this.shiftFactor = shiftFactor
+  }
+
+  call() {
+    const newCharacters = this.getNewCharacters()
+
+    return newCharacters.join('')
+  }
+
+  getNewCharacters() {
+    return map.call(this.string, character => {
+      const letters = this.selectLettersFor(character)
+
+      if (letters) {
+        return this.getNewLetter(letters, character)
+      } else {
+        return character
+      }
+    })
+  }
+
+  selectLettersFor(character) {
     if (upperCaseLetters.includes(character)) {
-      return getNewCharacter(upperCaseLetters, character, shiftFactor)
+      return upperCaseLetters
     } else if (lowerCaseLetters.includes(character)) {
-      return getNewCharacter(lowerCaseLetters, character, shiftFactor)
+      return lowerCaseLetters
     } else {
-      return character
+      return null
     }
-  })
-}
+  }
 
-function getNewCharacter(letters, characterCode, shiftFactor) {
-  const index = letters.indexOf(characterCode)
+  getNewLetter(letters, character) {
+    const index = letters.indexOf(character)
 
-  rotate(letters, shiftFactor)
+    rotate(letters, this.shiftFactor)
 
-  return letters[index]
+    return letters[index]
+  }
 }
 
 module.exports = caesar
